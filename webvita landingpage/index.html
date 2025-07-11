@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebVita Studio - powered by KAIAKOO®</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 50%, #b8c6db 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 20px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #e8e8e8 0%, #c0c0c0 50%, #a8a8a8 100%);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+            transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .logo::before {
+            content: '✓';
+            color: #00d4ff;
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 102, 204, 0.3);
+        }
+
+        .logo-text h1 {
+            color: #2c3e50;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .logo-text p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .lang-toggle {
+            display: flex;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 25px;
+            padding: 5px;
+            gap: 5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            background: transparent;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .lang-btn.active {
+            background: rgba(0, 212, 255, 0.1);
+            color: #00d4ff;
+            box-shadow: 0 2px 8px rgba(0, 212, 255, 0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .hero h2 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #5a6c7d;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 60px 40px;
+            margin-bottom: 60px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .upload-area {
+            border: 3px dashed #00d4ff;
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #f8fdff 0%, #e6f7ff 100%);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-area:hover {
+            border-color: #0066cc;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 102, 204, 0.2);
+        }
+
+        .upload-area::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .upload-area:hover::before {
+            opacity: 1;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .upload-icon {
+            font-size: 64px;
+            color: #00d4ff;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .upload-text h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .upload-text p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .file-types {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .file-type {
+            background: linear-gradient(45deg, #00d4ff, #0066cc);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+            color: #495057;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-btn {
+            background: linear-gradient(45deg, #00d4ff, #0066cc);
+            color: white;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            box-shadow: 0 6px 20px rgba(0, 102, 204, 0.25);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 102, 204, 0.4);
+        }
+
+        /* Hidden file input */
+        #fileInput {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .hero h2 {
+                font-size: 28px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .upload-section,
+            .cta-section {
+                padding: 40px 20px;
+            }
+
+            .upload-area {
+                padding: 40px 20px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation for file upload */
+        .upload-progress {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #00d4ff, #0066cc);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-section">
+                <div class="logo"></div>
+                <div class="logo-text">
+                    <h1>WebVita Studio</h1>
+                    <p>powered by KAIAKOO® - Bildungsträger</p>
+                </div>
+            </div>
+            <div class="lang-toggle">
+                <button class="lang-btn active" onclick="setLanguage('de')">DE</button>
+                <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <h2 data-de="Erstelle deine professionelle CV-Landingpage" data-en="Create your professional CV landing page">
+                Erstelle deine professionelle CV-Landingpage
+            </h2>
+            <p data-de="Erstelle aus deinem Lebenslauf eine moderne Website, die übersichtlicher und ansprechender ist als ein PDF." data-en="Turn your CV into a modern website that's clearer and more appealing than a PDF.">
+                Erstelle aus deinem Lebenslauf eine moderne Website, die übersichtlicher und ansprechender ist als ein PDF.
+            </p>
+        </section>
+
+        <!-- Upload Section -->
+        <section class="upload-section">
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                <span class="upload-icon">📄</span>
+                <div class="upload-text">
+                    <h3 data-de="Lade deinen Lebenslauf hoch" data-en="Upload your CV">Lade deinen Lebenslauf hoch</h3>
+                    <p data-de="Ziehe deine Datei hier hinein oder klicke zum Auswählen" data-en="Drag your file here or click to select">Ziehe deine Datei hier hinein oder klicke zum Auswählen</p>
+                </div>
+                <div class="file-types">
+                    <span class="file-type">PDF</span>
+                    <span class="file-type">DOCX</span>
+                    <span class="file-type">DOC</span>
+                    <span class="file-type">TXT</span>
+                </div>
+            </div>
+            <input type="file" id="fileInput" accept=".pdf,.docx,.doc,.txt" onchange="handleFileUpload(event)">
+            
+            <div class="upload-progress" id="uploadProgress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p data-de="Verarbeite deine Datei..." data-en="Processing your file...">Verarbeite deine Datei...</p>
+            </div>
+            
+            <div class="success-message" id="successMessage">
+                <strong data-de="Erfolgreich hochgeladen!" data-en="Successfully uploaded!">Erfolgreich hochgeladen!</strong>
+                <p data-de="Deine CV-Landingpage wird erstellt..." data-en="Your CV landing page is being created...">Deine CV-Landingpage wird erstellt...</p>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">⚙</div>
+                <h3 data-de="Baukasten-System" data-en="Modular Builder">Baukasten-System</h3>
+                <p data-de="Gestalte deine CV-Seite mit unserem intuitiven Baukasten. Wähle aus verschiedenen Designs und Layouts." data-en="Design your CV page with our intuitive builder. Choose from various designs and layouts.">Gestalte deine CV-Seite mit unserem intuitiven Baukasten. Wähle aus verschiedenen Designs und Layouts.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">□</div>
+                <h3 data-de="Teilbarer Link" data-en="Shareable Link">Teilbarer Link</h3>
+                <p data-de="Erhalte einen einzigartigen Link zu deiner CV-Landingpage, den du an Personaler und Unternehmen senden kannst." data-en="Get a unique link to your CV landing page that you can send to recruiters and companies.">Erhalte einen einzigartigen Link zu deiner CV-Landingpage, den du an Personaler und Unternehmen senden kannst.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">A</div>
+                <h3 data-de="Mehrsprachig" data-en="Multilingual">Mehrsprachig</h3>
+                <p data-de="Erstelle deine CV-Landingpage in Deutsch und Englisch für internationale Bewerbungen." data-en="Create your CV landing page in German and English for international applications.">Erstelle deine CV-Landingpage in Deutsch und Englisch für internationale Bewerbungen.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">▢</div>
+                <h3 data-de="Responsive Design" data-en="Responsive Design">Responsive Design</h3>
+                <p data-de="Deine CV-Landingpage sieht auf allen Geräten perfekt aus - Desktop, Tablet und Smartphone." data-en="Your CV landing page looks perfect on all devices - desktop, tablet and smartphone.">Deine CV-Landingpage sieht auf allen Geräten perfekt aus - Desktop, Tablet und Smartphone.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">↗</div>
+                <h3 data-de="Schnelle Erstellung" data-en="Quick Creation">Schnelle Erstellung</h3>
+                <p data-de="Von der Datei-Upload bis zur fertigen Landingpage in wenigen Minuten. Automatische Datenextraktion inklusive." data-en="From file upload to finished landing page in minutes. Automatic data extraction included.">Von der Datei-Upload bis zur fertigen Landingpage in wenigen Minuten. Automatische Datenextraktion inklusive.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">◊</div>
+                <h3 data-de="Professionell" data-en="Professional">Professionell</h3>
+                <p data-de="Beeindrucke Personaler mit einem modernen, professionellen Auftritt statt langweiliger PDF-Dateien." data-en="Impress recruiters with a modern, professional appearance instead of boring PDF files.">Beeindrucke Personaler mit einem modernen, professionellen Auftritt statt langweiliger PDF-Dateien.</p>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2 data-de="Bereit für deinen professionellen Auftritt?" data-en="Ready for your professional appearance?">Bereit für deinen professionellen Auftritt?</h2>
+            <p data-de="Starte jetzt und erstelle deine beeindruckende CV-Landingpage in wenigen Minuten." data-en="Start now and create your impressive CV landing page in minutes.">Starte jetzt und erstelle deine beeindruckende CV-Landingpage in wenigen Minuten.</p>
+            <button class="cta-btn" onclick="document.getElementById('fileInput').click()" data-de="Jetzt starten" data-en="Start now">Jetzt starten</button>
+        </section>
+    </div>
+
+    <script>
+        let currentLanguage = 'de';
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update active language button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[onclick="setLanguage('${lang}')"]`).classList.add('active');
+            
+            // Update all text elements
+            document.querySelectorAll('[data-de]').forEach(element => {
+                if (element.hasAttribute(`data-${lang}`)) {
+                    element.textContent = element.getAttribute(`data-${lang}`);
+                }
+            });
+        }
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const allowedTypes = ['.pdf', '.docx', '.doc', '.txt'];
+            const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+            
+            if (!allowedTypes.includes(fileExtension)) {
+                alert(currentLanguage === 'de' ? 
+                    'Bitte wähle eine unterstützte Datei (PDF, DOCX, DOC, TXT)' : 
+                    'Please select a supported file (PDF, DOCX, DOC, TXT)');
+                return;
+            }
+            
+            // Show progress
+            document.getElementById('uploadProgress').style.display = 'block';
+            const progressFill = document.getElementById('progressFill');
+            
+            // Simulate upload progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 30;
+                if (progress > 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    // Show success message
+                    setTimeout(() => {
+                        document.getElementById('uploadProgress').style.display = 'none';
+                        document.getElementById('successMessage').style.display = 'block';
+                        
+                        // Simulate redirect to CV builder
+                        setTimeout(() => {
+                            const cvUrl = `webvita.com/cv/${file.name.replace(/\.[^/.]+$/, "").toLowerCase().replace(/\s+/g, '-')}-${Date.now()}`;
+                            const message = currentLanguage === 'de' ? 
+                                `Deine CV-Landingpage ist bereit!\n\nTeile diesen Link mit Personalern:\n${cvUrl}\n\n(Dies ist eine Demo - der Link würde in der echten Anwendung funktionieren)` :
+                                `Your CV landing page is ready!\n\nShare this link with recruiters:\n${cvUrl}\n\n(This is a demo - the link would work in the real application)`;
+                            
+                            alert(message);
+                        }, 1500);
+                    }, 500);
+                }
+                progressFill.style.width = progress + '%';
+            }, 200);
+        }
+
+        // Drag and drop functionality
+        const uploadArea = document.querySelector('.upload-area');
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#0066cc';
+            uploadArea.style.backgroundColor = '#f0f8ff';
+        });
+        
+        uploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#00d4ff';
+            uploadArea.style.backgroundColor = '';
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#00d4ff';
+            uploadArea.style.backgroundColor = '';
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                document.getElementById('fileInput').files = files;
+                handleFileUpload({target: {files: files}});
+            }
+        });
+    </script>
+</body>
+</html>
